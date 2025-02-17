@@ -1,8 +1,26 @@
-import json 
-from linkedin_api import Linkedin
+import re
+locations = {"Pakistan", "India", "Kenya"}
+lis = {"manager", "boss", "ceo"}
+info = "Asadullah Mughal - Human Resources Manager | MBA in Human Resources - The Auctus - Karachi Division, Sindh, Pakistan - 1001 to 4000"
+parts = info.split(" - ")
+name = parts[0]
+title = parts[1]
+company = parts[2]
+location = parts[3]
+employees = parts[4]
 
-api = Linkedin('m10mathenge@gmail.com', 'markothengo99')
+person = {
+        "Name": name,
+        "Title":title,
+        "Company":company,
+        "Location":location,
+        "Employees":employees
+        }
 
-search = api.get_profile('ACoAAAXt9q4BUqKj5FE20TTTfqybJH6d1mpaZ74')
+new_person = employees.strip()
+pattern = r"(\d+)$"
 
-print(json.dumps(search, indent = 4))
+result = re.search(pattern, new_person)
+
+if result and any(word.lower() in title.lower() for word in lis) and any(word.lower() in location.lower() for word in locations):
+    print("yesssssssssirrrrrrrrrrrr!!")
